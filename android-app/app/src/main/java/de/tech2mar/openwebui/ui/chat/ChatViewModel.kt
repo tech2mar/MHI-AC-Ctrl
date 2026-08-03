@@ -73,6 +73,10 @@ class ChatViewModel(
         }
     }
 
+    fun retryLoadModels() {
+        loadModels(preferredModel = _uiState.value.selectedModel)
+    }
+
     fun onModelSelected(modelId: String) {
         _uiState.update { it.copy(selectedModel = modelId) }
         viewModelScope.launch { repository.saveSelectedModel(modelId) }

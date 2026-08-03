@@ -48,6 +48,7 @@ fun AppNavHost(container: AppContainer) {
             val viewModel: SettingsViewModel = viewModel(
                 factory = SettingsViewModel.Factory(container.settingsRepository, container.api)
             )
+            val canCancel = navController.previousBackStackEntry != null
             SettingsScreen(
                 viewModel = viewModel,
                 onContinueToChat = {
@@ -55,6 +56,11 @@ fun AppNavHost(container: AppContainer) {
                         popUpTo(0) { inclusive = true }
                         launchSingleTop = true
                     }
+                },
+                onCancel = if (canCancel) {
+                    { navController.popBackStack() }
+                } else {
+                    null
                 }
             )
         }
